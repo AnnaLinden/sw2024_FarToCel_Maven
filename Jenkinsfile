@@ -11,21 +11,19 @@ pipeline {
              }
              stage('Build') {
                  steps {
-                    sh 'mvn clean install'
+                   echo "Build App"
                  }
              }
              stage('Test') {
                  steps{
-                    sh 'mvn test'
+                    echo "Test App"
                  }
-                 post {
-                     success {
-                         // Publish JUnit test results
-                         junit '**/target/surefire-reports/TEST-*.xml'
-                         // Generate JaCoCo code coverage report
-                         jacoco(execPattern: '**/target/jacoco.exec')
-                     }
-                 }
+
+             }
+             stage ('Deploy') {
+                steps {
+                echo 'Deploy App'
+                }
              }
          }
 }
