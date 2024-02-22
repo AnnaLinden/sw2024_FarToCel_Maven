@@ -6,7 +6,7 @@ pipeline {
          stages {
              stage('Checkout') {
                  steps {
-                    git branch: 'main', url: 'git@github.com:AnnaLinden/sw2024_FarToCel_Maven'
+                    git branch: 'main', url: 'https://github.com/AnnaLinden/sw2024_FarToCel_Maven'
                  }
              }
              stage('Build') {
