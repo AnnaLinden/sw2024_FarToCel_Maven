@@ -1,29 +1,31 @@
 pipeline {
-     agent any
-        tools {
-            maven 'MAVEN_HOME'
+    agent any
+    tools {
+        maven 'MAVEN_HOME'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AnnaLinden/sw2024_FarToCel_Maven'
+            }
         }
-         stages {
-             stage('Checkout') {
-                 steps {
-                    git branch: 'main', url: 'https://github.com/AnnaLinden/sw2024_FarToCel_Maven'
-                 }
-             }
-             stage('Build') {
-                 steps {
-                   echo "Build App"
-                 }
-             }
-             stage('Test') {
-                 steps{
-                    echo "Test App"
-                 }
-
-             }
-             stage ('Deploy') {
-                steps {
-                echo 'Deploy App'
-                }
-             }
-         }
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+    post {
+        success {
+            // Publish JUnit test results
+            junit '**/target/surefire-reports/TEST-*.xml'
+            // Generate JaCoCo code coverage report
+            jacoco(execPattern: '**/target/jacoco.exec')
+        }
+    }
 }
