@@ -22,5 +22,12 @@ class FarToCelTest {
         Assertions.assertEquals(0, FarToCel.kelvintoCel(273.15f), 0.01);
         Assertions.assertEquals(100, FarToCel.kelvintoCel(373.15f), 0.01);
     }
+    @Test
+    void convertKeltoFarTest () {
+
+        double test = Math.round(FarToCel.kelvinToFah(300.1));
+        Assertions.assertEquals(81, test, 0.01) ;
+
+    }
 
 }
